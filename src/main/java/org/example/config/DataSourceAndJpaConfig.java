@@ -3,6 +3,7 @@ package org.example.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -26,7 +27,7 @@ import java.util.Map;
 //        transactionManagerRef = "jpaTransactionManager"
 //)
 //@EnableJpaRepositories
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class DataSourceAndJpaConfig {
 
     @Bean(destroyMethod = "close")
@@ -45,7 +46,7 @@ public class DataSourceAndJpaConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("dataSource") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource);
         localContainerEntityManagerFactoryBean.setPackagesToScan("org");
